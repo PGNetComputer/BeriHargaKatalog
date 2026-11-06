@@ -200,6 +200,53 @@
     .ly-balik { border: 0; background: rgba(255,255,255,.2); color: #fff; border-radius: 50%; width: 36px; height: 36px; font-size: 19px; }
     .ly-isi { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 10px calc(70px + env(safe-area-inset-bottom)); max-width: 760px; width: 100%; margin: 0 auto; }
     body.kunci-gulir { overflow: hidden; }
+    /* kartu Harga lama belum diupdate */
+    .g-lama .ly-kep { background: #c26401; }
+    .hl-kartu { background: #fff; border: 1px solid var(--garis); border-radius: 14px; overflow: hidden; margin: 0 0 10px; }
+    .hl-kep { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #fef3e2; border-bottom: 1px solid #f6dcb4; font-size: 13.5px; font-weight: 700; color: #8a4b00; }
+    .hl-kep small { margin-left: auto; font-weight: 600; color: #a8662a; font-size: 12px; white-space: nowrap; }
+    .hl-rw { display: flex; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--garis-muda); transition: background .25s; }
+    .hl-rw.ok { background: var(--hijau-muda); }
+    .hl-tx { flex: 1; min-width: 0; }
+    .hl-nm { font-weight: 700; font-size: 14px; line-height: 1.3; word-break: break-word; }
+    .hl-mt { font-size: 12px; color: var(--abu); margin-top: 2px; line-height: 1.45; }
+    .hl-mt b { color: #202124; font-variant-numeric: tabular-nums; }
+    .hl-hari { display: inline-block; background: #fce8e6; color: #c5221f; font-weight: 700; font-size: 11.5px; border-radius: 6px; padding: 0 6px; margin-left: 5px; }
+    .hl-inp { display: flex; gap: 6px; margin-top: 7px; }
+    .hl-inp input { flex: 1; min-width: 0; border: 1.5px solid #cfd6d1; border-radius: 9px; padding: 9px 10px; font: inherit; font-size: 15px; font-weight: 700; text-align: right; background: #fff; }
+    .hl-inp input:focus { outline: 0; border-color: #e37400; }
+    .hl-inp input::placeholder { font-weight: 500; font-size: 13.5px; color: #9aa0a6; }
+    .hl-inp button { border: 0; border-radius: 9px; padding: 0 14px; font-weight: 700; font-size: 13.5px; background: #fde7c4; color: #8a4b00; }
+    .hl-inp button.siap { background: #e37400; color: #fff; }
+    .hl-inp button.awas { background: #c5221f; color: #fff; }
+    .hl-ok { display: flex; align-items: center; gap: 5px; margin-top: 6px; color: var(--hijau); font-weight: 700; font-size: 13px; }
+    .hl-ok svg { width: 17px; height: 17px; flex: none; }
+    .hl-lain { display: block; width: 100%; border: 0; background: none; padding: 12px; font-size: 14px; font-weight: 700; color: #e37400; }
+    .hl-sek { font-size: 12px; font-weight: 800; letter-spacing: .3px; color: var(--abu); margin: 6px 2px 8px; text-transform: uppercase; }
+    .hl-sek small { text-transform: none; font-weight: 500; letter-spacing: 0; }
+    .hl-list .hl-rw { background: #fff; border: 1px solid var(--garis); border-radius: 12px; margin-bottom: 8px; }
+    .hl-list .hl-rw.ok { background: var(--hijau-muda); }
+    .hl-no { width: 26px; height: 26px; border-radius: 50%; background: #fef3e2; color: #e37400; font-weight: 800; font-size: 13px; display: grid; place-items: center; flex: none; }
+    .hl-no.n1 { background: #e37400; color: #fff; }
+    .hl-list + .hl-sek { margin-top: 16px; }
+    .hl-kt { background: #fff; border: 1px solid var(--garis); border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
+    .hl-kt > button { display: block; width: 100%; border: 0; background: none; padding: 10px 12px; text-align: left; font: inherit; color: inherit; }
+    .hl-kb { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+    .hl-kb span { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .hl-bar { display: block; height: 7px; border-radius: 4px; background: #eceff1; margin: 6px 0 4px; overflow: hidden; }
+    .hl-bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #f29900, #c5221f); }
+    .hl-kt small { font-size: 11.5px; color: var(--abu); }
+    .hl-dl { border-top: 1px solid var(--garis-muda); padding: 4px 12px 8px; font-size: 12.5px; }
+    .hl-dl div { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; border-bottom: 1px dashed #eef0ef; }
+    .hl-dl div:last-child { border-bottom: 0; }
+    .hl-dl span:first-child { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hl-dl span:last-child { white-space: nowrap; color: var(--abu); font-variant-numeric: tabular-nums; }
+    .hl-dl .hl-sisa { color: var(--abu); }
+    /* ajakan notifikasi (versi GitHub) */
+    .notif-ajak { display: flex; align-items: center; gap: 8px; background: #e8f0fe; border: 1px solid #c6dafc; color: #174ea6; border-radius: 12px; padding: 9px 10px 9px 12px; margin: 8px 0; font-size: 13px; }
+    .notif-ajak span { flex: 1; line-height: 1.35; }
+    .notif-ajak button { border: 0; border-radius: 8px; padding: 7px 12px; font: inherit; font-weight: 700; background: #1a73e8; color: #fff; }
+    .notif-ajak button.x { background: none; color: #5f6368; font-size: 18px; padding: 2px 6px; }
     #lagiPerlu .lagi { margin-top: 8px; width: 100%; }
     .kg-blok { border: 1.5px solid #2f5d4a; border-radius: 8px; overflow: hidden; background: #fff; margin-bottom: 10px; }
     .kg-judul { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #2f5d4a; color: #fff; padding: 9px 12px; font-size: 13px; font-weight: 700; letter-spacing: .2px; }
@@ -552,7 +599,7 @@
           withSuccessHandler: function (f) { return runner(f, gagal); },
           withFailureHandler: function (f) { return runner(ok, f); }
         };
-        ['hpMuat', 'hpPanaskan', 'hpSimpan', 'hpTandaiCek'].forEach(function (n) {
+        ['hpMuat', 'hpPanaskan', 'hpSimpan', 'hpTandaiCek', 'hpTandaiLama', 'hpDaftarNotif'].forEach(function (n) {
           r[n] = function () { panggil(n, [].slice.call(arguments), ok, gagal); };
         });
         return r;
@@ -609,6 +656,11 @@
       seqMuat: 0, muatJalan: false, muatLagi: null, tMuat: null, panasTerakhir: 0, panasJalan: false
     };
     S.riwayat = S.riwayat.filter(function (r) { return r.st !== 'ok' || hariDari(r.waktu) === hariIni(); });
+    // Harga lama: tanda "sudah dicek" (harga sama, sheet tidak diubah) + 2 barang acak per buka app
+    var LS_LAMA = 'pgnet_lama_v1', LS_LAMA_ACAK = 'pgnet_lama_acak';
+    S.lamaCek = lsAmbil(LS_LAMA, null) || { k: {}, kirim: [] };
+    S.hl = { pilih: null, top: null, ok: {}, isi: {}, yakin: {}, buka: false, kat: {} };
+    (function () { var m = String(location.search || '').match(/[?&]buka=(baru|lagi)/); S.bukaAwal = m ? m[1] : ''; })();
 
     /* ---------- utilitas ---------- */
     function el(id) { return document.getElementById(id); }
@@ -892,9 +944,11 @@
       S.antrian.forEach(terapkan);
       S.riwayat.forEach(function (r) { if (r.waktu >= (res.dibuat || 0)) terapkan({ nama: r.nama, harga: r.harga, status: 'Aktif' }); });
       terapkanCekLokal();
+      gabungLama(res.cekLama);
       setHtml('peringatan', res.peringatan ? '<div class="peringatan">' + esc(res.peringatan) + '</div>' : '');
       if (lamaVersi === null) bangunView(); else perbaruiView();
       gambarStatus();
+      if (S.bukaAwal && S.view === 'perlu') { var g0 = S.bukaAwal; S.bukaAwal = ''; bukaGrup(g0); return; }   // dari notifikasi
       cekRingkasHarian();
     }
 
@@ -994,8 +1048,11 @@
       if (S.view === 'perlu') {
         isi.innerHTML =
           '<div id="cekKt"></div><div class="info" id="infoPerlu"></div>' +
-          '<div id="progCek"></div><div id="duaKotak"></div>' +
+          '<div id="progCek"></div><div id="duaKotak"></div><div id="hargaLama"></div>' +
           '<div id="sudahCek"></div><div id="pitaLama"></div><div id="riwayat"></div>' +
+          '<div class="layar-grup g-lama" id="layarLama" hidden role="dialog" aria-modal="true"><div class="ly-kep">' +
+          '<button type="button" class="ly-balik" data-hltutup aria-label="Kembali">←</button><b>Harga lama</b><span id="hlN"></span></div>' +
+          '<div class="ly-isi" id="hlIsi"></div></div>' +
           // layar penuh khusus isi harga (muncul saat kotak Perlu harga / Cek ulang diketuk)
           '<div class="layar-grup" id="layarGrup" hidden role="dialog" aria-modal="true"><div class="ly-kep" id="lyKep"></div>' +
           '<div class="ly-isi" id="lyIsi"><div id="daftar" class="list-baris"></div><div id="lagiPerlu"></div></div></div>';
@@ -1216,6 +1273,7 @@
         (S.sudahBuka ? '<div class="cek-ok-list">' + urutS.map(function (it) {
           return '<div class="cek-ok"><span class="n">' + esc(it.nama) + '</span><span class="h">' + rp(it.hargaSekarang) + ' <span class="ck">' + IKON_CEK + '</span></span></div>';
         }).join('') + '</div>' : ''));
+      gambarHL();
       gambarRiwayat();
     }
 
@@ -1715,9 +1773,9 @@
       var semua = [], terlama = 0;
       S.ref.master.baris.forEach(function (r) {
         if (!barisAktif(r)) return;
-        var u = umurHari(r[4]);
-        if (u !== null && u <= 30) return;
         var k = kunci(r[1]);
+        var u = umurHari(hlTgl(r, k));
+        if (u !== null && u <= 30) return;
         if (diPerlu[k]) return;   // sudah tampil di "Perlu dicek"
         if (r[4] && (!terlama || r[4] < terlama)) terlama = r[4];
         semua.push({ r: r, k: k, l: letakBarang(k, r[1]) });
@@ -1771,6 +1829,168 @@
           return htmlBaris({ k: x.k, nama: r[1], meta: meta, harga: r[2], tgl: r[4], tanpaUmur: true, tanpaBawah: true });
         }, function (e, x) { hiasBaris(e, x.k); }, '');
       });
+    }
+
+    /* ---------- Kartu "Harga lama belum diupdate" ----------
+     * 2 barang acak (berganti tiap app dibuka) dari barang Aktif yang harganya > 30 hari
+     * belum diupdate / dicek. "Lihat daftar barang lainnya" = 5 teratas (modal × lama)
+     * + kategori dengan modal terbesar. Ketik ulang harga: sama -> hanya ditandai dicek
+     * (sheet tidak berubah), beda -> harga baru disimpan seperti biasa.
+     */
+    function gabungLama(dariServer) {
+      var o = S.lamaCek, d = new Date(); d.setDate(d.getDate() - 60);
+      var batas = hariDari(d.getTime());
+      if (dariServer) Object.keys(dariServer).forEach(function (k) { if (!(o.k[k] >= dariServer[k])) o.k[k] = dariServer[k]; });
+      Object.keys(o.k).forEach(function (k) { if (o.k[k] < batas && o.kirim.indexOf(k) < 0) delete o.k[k]; });
+      lsTaruh(LS_LAMA, o);
+    }
+    function hlTgl(r, k) { return Math.max(r[4] || 0, S.lamaCek.k[k] || 0) || 0; }
+    function tandaiLama(k) {
+      S.lamaCek.k[k] = hariIni();
+      if (S.lamaCek.kirim.indexOf(k) < 0) S.lamaCek.kirim.push(k);
+      lsTaruh(LS_LAMA, S.lamaCek); kirimLama();
+    }
+    var lamaJalan = false, tLama = null;
+    function kirimLama() {
+      if (lamaJalan || !S.lamaCek.kirim.length) return;
+      lamaJalan = true;
+      var paket = S.lamaCek.kirim.slice();
+      google.script.run
+        .withSuccessHandler(function () {
+          lamaJalan = false;
+          S.lamaCek.kirim = S.lamaCek.kirim.filter(function (k) { return paket.indexOf(k) < 0; });
+          lsTaruh(LS_LAMA, S.lamaCek); if (S.lamaCek.kirim.length) kirimLama();
+        })
+        .withFailureHandler(function () { lamaJalan = false; clearTimeout(tLama); tLama = setTimeout(kirimLama, 15000); })
+        .hpTandaiLama(S.pin, paket, hariIni());
+    }
+    /** kunci nama -> [qty, total modal, kategori] dari DATA KATALOG (AUTO) */
+    function hlModal() {
+      var m = {}, R = S.ref && S.ref.ringkas;
+      if (R && R.it) R.it.forEach(function (x) { var k = kunci(x[1]), a = m[k] || (m[k] = [0, 0, x[0]]); a[0] += x[2]; a[1] += x[3]; });
+      return m;
+    }
+    function hlDaftar() {
+      var diPerlu = {}, ada = {}, M = hlModal(), L = [];
+      S.ref.daftar.items.forEach(function (it) { if (perluCek(it)) diPerlu[it.kunci] = 1; });
+      S.ref.master.baris.forEach(function (r) {
+        if (!barisAktif(r) || !(r[2] > 0)) return;
+        var k = kunci(r[1]); if (ada[k] || diPerlu[k]) return;
+        var t = hlTgl(r, k), u = umurHari(t);
+        if (u !== null && u <= 30) return;
+        ada[k] = 1;
+        var m = M[k] || [0, 0, ''];
+        L.push({ k: k, nama: r[1], harga: r[2], t: t, u: u === null ? 9999 : u, q: m[0], m: m[1], kat: m[2] });
+      });
+      return L;
+    }
+    function hlSkor(x) { return x.m * Math.min(x.u, 400) + x.u; }
+    function hlPilih(L) {
+      var lalu = lsAmbil(LS_LAMA_ACAK, []), a = L.filter(function (x) { return lalu.indexOf(x.k) < 0; });
+      if (a.length < 2) a = L.slice();
+      var out = [];
+      while (out.length < 2 && a.length) out.push(a.splice(Math.floor(Math.random() * a.length), 1)[0]);
+      S.hl.pilih = out;
+      lsTaruh(LS_LAMA_ACAK, out.map(function (x) { return x.k; }));
+    }
+    function hlCari(k) {
+      var a = (S.hl.pilih || []).concat(S.hl.top || []);
+      for (var i = 0; i < a.length; i++) if (a[i].k === k) return a[i];
+      return null;
+    }
+    function hlInfo(x) {
+      return 'Terpasang <b>' + rp(x.harga) + '</b><span class="hl-hari">' + (x.t ? lamanya(x.t) + ' lalu' : 'belum ada tanggal') + '</span>' +
+        (x.m ? '<br>Modal ' + rb(x.m) + ' · ' + x.q + ' unit' : '');
+    }
+    function hlBaris(x, no) {
+      var ok = S.hl.ok[x.k], ek = esc(x.k);
+      return '<div class="hl-rw' + (ok ? ' ok' : '') + '">' + (no ? '<span class="hl-no' + (no === 1 ? ' n1' : '') + '">' + no + '</span>' : '') +
+        '<div class="hl-tx"><div class="hl-nm">' + esc(x.nama) + '</div><div class="hl-mt">' + hlInfo(x) + '</div>' +
+        (ok ? '<div class="hl-ok">' + IKON_CEK + '<span>' + ok + '</span></div>'
+          : '<div class="hl-inp"><input type="text" inputmode="numeric" autocomplete="off" placeholder="Ketik ulang harganya" data-lk="' + ek + '" aria-label="Harga ' + esc(x.nama) + '">' +
+            '<button type="button" data-lsimpan="' + ek + '"' + (S.hl.yakin[x.k] ? ' class="awas"' : '') + '>' + (S.hl.yakin[x.k] ? 'Yakin?' : 'Simpan') + '</button></div>') +
+        '</div></div>';
+    }
+    function gambarHL(paksa) {
+      var box = el('hargaLama'), ly = el('layarLama');
+      if (!box || !S.ref) return;
+      var a = document.activeElement;
+      if (!paksa && a && a.getAttribute && a.getAttribute('data-lk') && (box.contains(a) || ly.contains(a))) return;   // sedang mengetik
+      var L = hlDaftar();
+      if (!S.hl.pilih) hlPilih(L);
+      setHtml('hargaLama', !S.hl.pilih.length ? '' : '<section class="hl-kartu"><div class="hl-kep"><span>⏳ Harga lama belum diupdate</span><small>' + L.length + ' barang</small></div>' +
+        S.hl.pilih.map(function (x) { return hlBaris(x); }).join('') +
+        '<button type="button" class="hl-lain" data-hllain>Lihat daftar barang lainnya ›</button></section>');
+      var buka = !!S.hl.buka;
+      if (ly.hidden === buka) { ly.hidden = !buka; document.body.classList.toggle('kunci-gulir', buka || !!S.grup); }
+      if (buka) {
+        setTeks('hlN', L.length + ' barang');
+        var K = {}, kl = [];
+        L.forEach(function (x) {
+          var n = x.kat ? rkNamaKat(x.kat) : 'Tanpa data modal', g = K[n] || (K[n] = { n: n, m: 0, it: [], u: 0 });
+          g.m += x.m; g.it.push(x); if (x.u > g.u) g.u = x.u;
+        });
+        Object.keys(K).forEach(function (n) { K[n].it.sort(function (p, q) { return hlSkor(q) - hlSkor(p); }); kl.push(K[n]); });
+        kl.sort(function (p, q) { return q.m - p.m || q.it.length - p.it.length; });
+        var mx = kl.length && kl[0].m || 1;
+        setHtml('hlIsi', '<div class="hl-sek">5 barang teratas <small>· modal terbesar &amp; paling lama</small></div>' +
+          '<div class="hl-list">' + S.hl.top.map(function (x, i) { return hlBaris(x, i + 1); }).join('') + '</div>' +
+          (kl.length ? '<div class="hl-sek">Kategori modal terbesar <small>· belum update</small></div>' + kl.map(function (g) {
+            var b = !!S.hl.kat[g.n];
+            return '<div class="hl-kt"><button type="button" data-hlkat="' + esc(g.n) + '" aria-expanded="' + b + '"><span class="hl-kb"><b>' + esc(g.n) + '</b><span>' + (g.m ? rb(g.m) : '') + ' ' + (b ? '▴' : '▾') + '</span></span>' +
+              '<span class="hl-bar"><i style="width:' + Math.max(3, Math.round(g.m / mx * 100)) + '%"></i></span>' +
+              '<small>' + g.it.length + ' barang belum update · paling lama ' + (g.u >= 9999 ? 'tanpa tanggal' : g.u + ' hari') + '</small></button>' +
+              (b ? '<div class="hl-dl">' + g.it.slice(0, 5).map(function (x) {
+                return '<div><span>' + esc(x.nama) + '</span><span>' + (x.m ? rb(x.m) + ' · ' : '') + (x.u >= 9999 ? '–' : x.u + ' hr') + '</span></div>';
+              }).join('') + (g.it.length > 5 ? '<div class="hl-sisa">+' + (g.it.length - 5) + ' barang lainnya</div>' : '') + '</div>' : '') + '</div>';
+          }).join('') : '') +
+          (!L.length ? '<div class="kosongan">✓ Semua harga barang Aktif sudah diupdate dalam 30 hari terakhir.</div>' : ''));
+      }
+      // ketikan yang belum disimpan dipasang lagi
+      var ins = document.querySelectorAll('input[data-lk]');
+      for (var i = 0; i < ins.length; i++) {
+        var k = ins[i].getAttribute('data-lk'), v = S.hl.isi[k] || 0;
+        if (angka(ins[i].value) !== v) ins[i].value = ribu(v);
+        var b = ins[i].parentNode.querySelector('[data-lsimpan]'); if (b) b.classList.toggle('siap', v > 0);
+      }
+    }
+    function bukaHL() {
+      var L = hlDaftar().sort(function (p, q) { return hlSkor(q) - hlSkor(p); });
+      S.hl.top = L.slice(0, 5); S.hl.buka = true;
+      try { history.pushState({ hl: 1 }, ''); } catch (e) {}
+      gambarHL(true);
+      var i = el('hlIsi'); if (i) i.scrollTop = 0;
+    }
+    function tutupHL(dariKembali) {
+      if (!S.hl.buka) return;
+      S.hl.buka = false;
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      if (!dariKembali) { try { if (history.state && history.state.hl) history.back(); } catch (e) {} }
+      gambarHL(true);
+    }
+    window.addEventListener('popstate', function () { if (S.hl.buka) tutupHL(true); });
+    function simpanLama(k) {
+      var x = hlCari(k); if (!x || S.hl.ok[k] || cegahKalauTahan()) return;
+      var n = S.hl.isi[k] || 0;
+      if (!n) { toast('Ketik ulang harganya dulu. Harga terpasang ' + rp(x.harga) + '.'); var i0 = sel('data-lk', k); if (i0) i0.focus(); return; }
+      var ms = x.q ? Math.round(x.m / x.q) : 0;
+      if (n !== x.harga && ms && n <= ms && !S.hl.yakin[k]) {
+        S.hl.yakin[k] = true; gambarHL(true);
+        toast('Harga <b>di bawah modal</b> (' + rp(ms) + '). Tekan <b>Yakin?</b> kalau memang disengaja.', 4000);
+        return;
+      }
+      delete S.hl.isi[k]; delete S.hl.yakin[k];
+      if (n === x.harga) {
+        tandaiLama(k);
+        S.hl.ok[k] = 'Sudah dicek · harga tetap ' + rp(n);
+        toast('<b>' + esc(x.nama) + '</b> · harga sama, ditandai sudah dicek');
+      } else {
+        catat(x.nama, n);
+        S.hl.ok[k] = 'Tersimpan ' + rp(n) + ' (sebelumnya ' + rp(x.harga) + ')';
+        toast('<b>' + esc(x.nama) + '</b> · ' + rp(n));
+      }
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      perbaruiView(); gambarHL(true);
     }
 
     /* ---------- Lama Belum Update ---------- */
@@ -1828,6 +2048,10 @@
       if ((x = t.closest('[data-grup]'))) { bukaGrup(x.getAttribute('data-grup')); return; }
       if (t.closest('[data-gruptutup]')) { tutupGrup(); return; }
       if (t.closest('[data-grupLagi]') || t.closest('[data-gruplagi]')) { S.batasGrup += 10; perbaruiPerlu(); return; }
+      if ((x = t.closest('[data-lsimpan]'))) { simpanLama(x.getAttribute('data-lsimpan')); return; }
+      if (t.closest('[data-hllain]')) { bukaHL(); return; }
+      if (t.closest('[data-hltutup]')) { tutupHL(); return; }
+      if ((x = t.closest('[data-hlkat]'))) { var hk = x.getAttribute('data-hlkat'); S.hl.kat[hk] = !S.hl.kat[hk]; gambarHL(true); return; }
       if (t.closest('[data-sudah]')) { S.sudahBuka = !S.sudahBuka; perbaruiPerlu(); return; }
       if (t.closest('[data-plihat]')) { S.pita.lihat = !S.pita.lihat; gambarPita(); return; }
       if ((x = t.closest('[data-pkat]'))) { S.pita.kat = Number(x.getAttribute('data-pkat')); gambarPita(); return; }
@@ -1852,6 +2076,15 @@
 
     document.addEventListener('input', function (e) {
       var t = e.target;
+      var lk = t.getAttribute && t.getAttribute('data-lk');
+      if (lk) {
+        var nl = angka(t.value);
+        if (nl) S.hl.isi[lk] = nl; else delete S.hl.isi[lk];
+        if (t.value !== ribu(nl)) t.value = ribu(nl);
+        if (S.hl.yakin[lk]) { delete S.hl.yakin[lk]; var by = t.parentNode.querySelector('[data-lsimpan]'); if (by) { by.classList.remove('awas'); by.textContent = 'Simpan'; } }
+        var bl = t.parentNode.querySelector('[data-lsimpan]'); if (bl) bl.classList.toggle('siap', nl > 0);
+        return;
+      }
       var k = t.getAttribute && t.getAttribute('data-k');
       if (!k) return;
       var n = angka(t.value);
@@ -1879,7 +2112,9 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { el('bantu').hidden = true; el('ringkas').hidden = true; if (S.grup && !(e.target && e.target.getAttribute && e.target.getAttribute('data-k'))) tutupGrup(); }
+      if (e.key === 'Escape') { el('bantu').hidden = true; el('ringkas').hidden = true; if (S.grup && !(e.target && e.target.getAttribute && e.target.getAttribute('data-k'))) tutupGrup(); if (S.hl.buka) tutupHL(); }
+      var lk = e.target && e.target.getAttribute && e.target.getAttribute('data-lk');
+      if (lk) { if (e.key === 'Enter') { e.preventDefault(); simpanLama(lk); } return; }
       var k = e.target && e.target.getAttribute && e.target.getAttribute('data-k');
       if (!k) return;
       if (S.view === 'katalog') {
@@ -1897,6 +2132,7 @@
     el('main').innerHTML = '<div id="peringatan"></div><div id="panelGagal"></div><div id="isi"></div>';
     S.antrian.forEach(function (e) { delete e.sedang; });
     setTimeout(kirimCek, 1500);   // tanda "Sesuai" yang belum sempat terkirim
+    setTimeout(kirimLama, 1800);  // tanda "harga lama sudah dicek" yang belum sempat terkirim
     var simpanan = lsAmbil(LS_DATA, null);
     if (simpanan && simpanan.daftar && simpanan.master) pasang(simpanan);       // tampil seketika dari HP
     else el('isi').innerHTML = '<div class="muat"><div class="putar"></div>Memuat data…</div>';   // spinner hanya kalau benar-benar menunggu
@@ -1910,6 +2146,78 @@
     if ('serviceWorker' in navigator && location.protocol === 'https:') {
       window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
     }
+  </script>
+  <script>
+    /* Notifikasi jam 21.00 lewat Firebase Cloud Messaging.
+       Butuh FIREBASE dan VAPID_KEY di config.js. Kalau belum diisi, bagian ini diam saja. */
+    (function () {
+      var F = window.FIREBASE, V = window.VAPID_KEY, VER = '10.12.2', LS = 'pgnet_notif';
+      if (!F || !F.apiKey || /TEMPEL/.test(F.apiKey) || !V || /TEMPEL/.test(V)) return;
+      if (!('serviceWorker' in navigator) || !('Notification' in window) || !('PushManager' in window)) return;
+      function ambil() { try { return JSON.parse(localStorage.getItem(LS)) || {}; } catch (e) { return {}; } }
+      function taruh(o) { try { localStorage.setItem(LS, JSON.stringify(o)); } catch (e) {} }
+      function pin() { try { return JSON.parse(localStorage.getItem('pgnet_pin_harga')) || ''; } catch (e) { return ''; } }
+      function pesan(t, lama) { if (window.toast) toast(t, lama || 4500); }
+      function label() {
+        var u = navigator.userAgent, m = u.match(/Android[^;)]*;\s*([^;)]+?)(?:\sBuild|\))/);
+        return (m ? m[1] : /iPhone|iPad/.test(u) ? 'iPhone/iPad' : 'Komputer').slice(0, 40);
+      }
+      function muatSdk(cb, gagal) {
+        if (window.firebase && firebase.messaging) return cb();
+        var urut = ['app', 'messaging'], i = 0;
+        (function berikut() {
+          if (i >= urut.length) return cb();
+          var sc = document.createElement('script');
+          sc.src = 'https://www.gstatic.com/firebasejs/' + VER + '/firebase-' + urut[i++] + '-compat.js';
+          sc.onload = berikut; sc.onerror = function () { gagal(new Error('SDK Firebase gagal dimuat (cek internet)')); };
+          document.head.appendChild(sc);
+        })();
+      }
+      function daftar(tampil) {
+        if (!pin()) return;
+        muatSdk(function () {
+          try { if (!firebase.apps.length) firebase.initializeApp(F); } catch (e) {}
+          navigator.serviceWorker.register('sw.js')
+            .then(function () { return navigator.serviceWorker.ready; })
+            .then(function (reg) { return firebase.messaging().getToken({ vapidKey: V, serviceWorkerRegistration: reg }); })
+            .then(function (tok) {
+              if (!tok) throw new Error('token kosong');
+              var o = ambil();
+              if (!tampil && o.tok === tok && Date.now() - (o.w || 0) < 7 * 864e5) return;   // sudah terdaftar minggu ini
+              google.script.run
+                .withSuccessHandler(function () {
+                  o.tok = tok; o.w = Date.now(); taruh(o);
+                  if (tampil) pesan('🔔 <b>Notifikasi aktif.</b> Tiap jam 21.00 diingatkan kalau masih ada barang yang belum diberi harga.', 5000);
+                })
+                .withFailureHandler(function (e) { if (tampil) pesan('Gagal mendaftarkan notifikasi: ' + (e && e.message || e)); })
+                .hpDaftarNotif(pin(), tok, label());
+            })
+            .catch(function (e) { if (tampil) pesan('Notifikasi belum bisa diaktifkan: ' + (e && e.message || e)); });
+        }, function (e) { if (tampil) pesan(e.message); });
+      }
+      function gambar() {
+        var b = document.getElementById('notifAjak'), main = document.getElementById('main'), o = ambil();
+        var tampil = Notification.permission === 'default' && pin() && !(o.tutup && Date.now() - o.tutup < 7 * 864e5);
+        if (!tampil) { if (b) b.parentNode.removeChild(b); return; }
+        if (b || !main) return;
+        b = document.createElement('div'); b.id = 'notifAjak'; b.className = 'notif-ajak';
+        b.innerHTML = '<span>🔔 Ingatkan jam 21.00 kalau masih ada barang yang belum diberi harga</span>' +
+          '<button type="button" data-nya>Aktifkan</button><button type="button" class="x" data-ntutup aria-label="Tutup">×</button>';
+        main.insertBefore(b, main.firstChild);
+      }
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (t.closest && t.closest('[data-nya]')) {
+          Notification.requestPermission().then(function (p) {
+            if (p === 'granted') daftar(true);
+            else pesan('Izin notifikasi ditolak. Bisa diaktifkan lagi lewat ikon gembok di samping alamat situs.', 5000);
+            gambar();
+          });
+        } else if (t.closest && t.closest('[data-ntutup]')) { var o = ambil(); o.tutup = Date.now(); taruh(o); gambar(); }
+      });
+      if (Notification.permission === 'granted') setTimeout(function () { daftar(false); }, 3000);
+      gambar(); setInterval(gambar, 5000);   // muncul setelah PIN diisi
+    })();
   </script>
 </body>
 </html>
