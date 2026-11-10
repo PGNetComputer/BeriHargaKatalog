@@ -212,6 +212,11 @@
     .hl-mt { font-size: 12px; color: var(--abu); margin-top: 2px; line-height: 1.45; }
     .hl-mt b { color: #202124; font-variant-numeric: tabular-nums; }
     .hl-hari { display: inline-block; background: #fce8e6; color: #c5221f; font-weight: 700; font-size: 11.5px; border-radius: 6px; padding: 0 6px; margin-left: 5px; }
+    .hl-dua { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+    .hl-dua > span { border-radius: 8px; padding: 5px 8px; font-size: 11px; color: var(--abu); line-height: 1.3; }
+    .hl-dua b { display: block; font-size: 13px; }
+    .hl-dua .h { background: #fce8e6; } .hl-dua .h b { color: #c5221f; }
+    .hl-dua .s { background: #fff4d6; } .hl-dua .s b { color: #8a4b00; }
     .hl-inp { display: flex; gap: 6px; margin-top: 7px; }
     .hl-inp input { flex: 1; min-width: 0; border: 1.5px solid #cfd6d1; border-radius: 9px; padding: 9px 10px; font: inherit; font-size: 15px; font-weight: 700; text-align: right; background: #fff; }
     .hl-inp input:focus { outline: 0; border-color: #e37400; }
@@ -221,6 +226,15 @@
     .hl-inp button.awas { background: #c5221f; color: #fff; }
     .hl-ok { display: flex; align-items: center; gap: 5px; margin-top: 6px; color: var(--hijau); font-weight: 700; font-size: 13px; }
     .hl-ok svg { width: 17px; height: 17px; flex: none; }
+    .hl-bwh { display: flex; justify-content: flex-end; margin-top: 4px; }
+    .hl-bwh .link { font-size: 12.5px; color: var(--biru); }
+    .hl-sj { margin-top: 6px; }
+    .hl-ktg { background: #fff; border: 1px solid var(--garis); border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+    .hl-ktg .kt-sub { margin: 8px 8px 0; }
+    .hl-ktg .kg-grup .kg-tanda { flex: none; }
+    .hl-grup { border-bottom: 1px solid #e3e3e3; }
+    .hl-grup .hl-rw { background: #fff; }
+    .hl-grup .hl-rw.ok { background: var(--hijau-muda); }
     .hl-lain { display: block; width: 100%; border: 0; background: none; padding: 12px; font-size: 14px; font-weight: 700; color: #e37400; }
     .hl-sek { font-size: 12px; font-weight: 800; letter-spacing: .3px; color: var(--abu); margin: 6px 2px 8px; text-transform: uppercase; }
     .hl-sek small { text-transform: none; font-weight: 500; letter-spacing: 0; }
@@ -659,7 +673,7 @@
     // Harga lama: tanda "sudah dicek" (harga sama, sheet tidak diubah) + 2 barang acak per buka app
     var LS_LAMA = 'pgnet_lama_v1', LS_LAMA_ACAK = 'pgnet_lama_acak';
     S.lamaCek = lsAmbil(LS_LAMA, null) || { k: {}, kirim: [] };
-    S.hl = { pilih: null, top: null, ok: {}, isi: {}, yakin: {}, buka: false, kat: {} };
+    S.hl = { pilih: null, top: null, ok: {}, isi: {}, yakin: {}, buka: false, kat: {}, sj: '', peta: {}, kt: { t: 0, sub: [0, 0, 0, 0], buka: {} } };
     (function () { var m = String(location.search || '').match(/[?&]buka=(baru|lagi)/); S.bukaAwal = m ? m[1] : ''; })();
 
     /* ---------- utilitas ---------- */
@@ -1049,7 +1063,7 @@
         isi.innerHTML =
           '<div id="cekKt"></div><div class="info" id="infoPerlu"></div>' +
           '<div id="progCek"></div><div id="duaKotak"></div><div id="hargaLama"></div>' +
-          '<div id="sudahCek"></div><div id="pitaLama"></div><div id="riwayat"></div>' +
+          '<div id="sudahCek"></div><div id="riwayat"></div>' +
           '<div class="layar-grup g-lama" id="layarLama" hidden role="dialog" aria-modal="true"><div class="ly-kep">' +
           '<button type="button" class="ly-balik" data-hltutup aria-label="Kembali">←</button><b>Harga lama</b><span id="hlN"></span></div>' +
           '<div class="ly-isi" id="hlIsi"></div></div>' +
@@ -1352,17 +1366,28 @@
     function merekAwal(nama) { return merek(nama).split(/\s+/)[0] || ''; }
 
     /** Kelompok katalog yang paling cocok untuk nama ini: { b: blok, g: [judul, barang] } */
+    /** [awalan rinci, awalan umum]: CPU -> ["I5-13", "I5"]; lainnya -> 3 kata pertama, 2 kata pertama */
+    function awalan(nama) {
+      var u = kunci(nama), m;
+      if ((m = u.match(/^(I[3579])-(\d)/))) return [kelompok(nama).kunci, m[1]];
+      if ((m = u.match(/^RYZEN (\d)/))) return [kelompok(nama).kunci, 'RYZEN ' + m[1]];
+      var w = u.split(/\s*\(|\s+-\s+/)[0].split(' ');
+      return [w.slice(0, 3).join(' '), w.slice(0, 2).join(' ')];
+    }
     function grupKatalog(nama) {
       if (!S.ref || !S.ref.katalog || !S.ref.katalog.kat) return null;
       var key = kunci(nama);
       if (key in _grup) return _grup[key];
       var kg = kelompok(nama).kunci, br = merekAwal(nama), best = null, skor = 0;
+      // cadangan kalau tidak ada yang sekelompok: awalan nama yang sama (mis. "i5", "SSD SATA 256GB", "SSD SATA")
+      var aw = awalan(nama);
       S.ref.katalog.kat.forEach(function (b) {
         b.g.forEach(function (g) {
           var s = 0;
           g[1].forEach(function (x) {
             if (kunci(x[0]) === key) s += 1000;
             if (kelompok(x[0]).kunci === kg) { s += 1; if (br && merekAwal(x[0]) === br) s += 10; }
+            else { var a2 = awalan(x[0]); if (aw[0] && a2[0] === aw[0]) s += 0.01; else if (aw[1] && a2[1] === aw[1]) s += 0.001; }
           });
           if (s > skor) { skor = s; best = { b: b, g: g }; }
         });
@@ -1439,26 +1464,32 @@
         baris + lagi + kaki + '</div>';
     }
 
+    /** Cadangan kalau barang & kelompoknya tidak ada di katalog: tampilan tetap seperti katalog, isinya dari MASTER HARGA (Aktif). */
     function htmlSejenisMaster(o) {
-      var g = kelompok(o.nama), kond = kondisi(o.nama);
+      var g = kelompok(o.nama);
       var L = S.ref.master.baris.filter(function (r) {
         return r[3] === 'Aktif' && r[2] > 0 && kunci(r[1]) !== o.k && kelompok(r[1]).kunci === g.kunci;
-      }).sort(function (a, b) { return a[2] - b[2] || a[1].localeCompare(b[1]); });
-      var atas = '<div class="sj-atas"><span class="t">Sejenis ready: <span>' + esc(g.judul) + '</span></span>' +
-        (urlSheetKatalog() ? '<a href="' + esc(urlSheetKatalog()) + '" target="_blank" rel="noopener">Lihat di sheet ↗</a>' : '') + '</div>';
-      if (!L.length) return '<div class="sj">' + atas + '<div class="sj-kosong">Belum ada barang sejenis yang Aktif di MASTER HARGA.</div></div>';
-      var tengah = L[Math.floor((L.length - 1) / 2)][2];
-      var ringkas = '<div class="sj-ringkas"><div><small>Termurah</small><b>' + rb(L[0][2]) + '</b></div><div><small>Tengah</small><b>' + rb(tengah) +
-        '</b></div><div><small>Termahal</small><b>' + rb(L[L.length - 1][2]) + '</b></div></div>';
-      var batas = S.sejenisLagi[o.k] ? L.length : 5;
-      var baris = L.slice(0, batas).map(function (r) {
-        var kd = kondisi(r[1]), sama = kond && kd === kond, nm = esc(r[1]);
-        if (kd) nm = nm.replace('(' + kd + '%)', '<span class="kond">(' + kd + '%)</span>');
-        return '<div class="sj-baris' + (sama ? ' mirip' : '') + '"><span class="n">' + nm + '<small>' + umurPendek(r[4]) + '</small></span>' +
-          '<span class="h">' + ribu(r[2]) + '</span><button type="button" class="pakai" data-pakai="' + esc(o.k) + '" data-h="' + r[2] + '">Pakai</button></div>';
+      }).map(function (r) { return { n: r[1], h: r[2], k: kunci(r[1]) }; });
+      L.push({ n: o.nama, h: o.harga || 0, k: o.k });
+      L.sort(function (a, b) { return (a.h || 1e12) - (b.h || 1e12) || a.n.localeCompare(b.n); });
+      var idx = 0; L.forEach(function (x, i) { if (x.k === o.k) idx = i; });
+      var awal = 0, akhir = L.length;
+      if (!S.sejenisLagi[o.k] && L.length > 12) { awal = Math.max(0, Math.min(idx - 5, L.length - 11)); akhir = awal + 11; }
+      var harga = L.filter(function (x) { return x.k !== o.k && x.h > 0; }).map(function (x) { return x.h; });
+      var baris = L.slice(awal, akhir).map(function (x) {
+        var ini = x.k === o.k;
+        return '<div class="kt-baris' + (ini ? ' ini' : '') + '"><span class="n">' + esc(x.n) + (ini ? ' <em class="kt-lbl ini">barang ini</em>' : '') + '</span>' +
+          '<span class="q">–</span><span class="h">' + (x.h > 0 ? ribu(x.h) : '–') + '</span>' +
+          (x.h > 0 && !ini ? '<button type="button" class="pakai" data-pakai="' + esc(o.k) + '" data-h="' + x.h + '">Pakai</button>' : '<span class="kt-sp"></span>') + '</div>';
       }).join('');
-      var lagi = L.length > batas ? '<button type="button" class="sj-lagi" data-sjlagi="' + esc(o.k) + '">Tampilkan ' + (L.length - batas) + ' lagi</button>' : '';
-      return '<div class="sj">' + atas + ringkas + baris + lagi + '</div>';
+      var lagi = (awal > 0 || akhir < L.length) ? '<button type="button" class="sj-lagi" data-sjlagi="' + esc(o.k) + '">Tampilkan semua (' + L.length + ' barang)</button>' : '';
+      var kaki = harga.length ? '<div class="kt-kaki">Termurah <b>' + rb(harga[0]) + '</b> · Tengah <b>' + rb(harga[Math.floor((harga.length - 1) / 2)]) + '</b> · Termahal <b>' + rb(harga[harga.length - 1]) + '</b></div>'
+        : '<div class="kt-kaki">Belum ada barang sejenis yang Aktif.</div>';
+      return '<div class="kt"><div class="kt-blok"><span class="j">' + esc(g.judul) + '</span>' +
+        (urlSheetKatalog() ? '<a href="' + esc(urlSheetKatalog()) + '" target="_blank" rel="noopener">Lihat di sheet ↗</a>' : '') + '</div>' +
+        '<div class="kt-grup"><b>▾ ' + esc(g.judul) + '</b><span>belum ada di katalog</span></div>' +
+        '<div class="kt-kol"><span class="n">Nama barang</span><span class="q">Qty</span><span class="h">Harga</span><span class="kt-sp"></span></div>' +
+        baris + lagi + kaki + '</div>';
     }
 
     function pakaiHarga(k, h) {
@@ -1896,11 +1927,14 @@
     function hlCari(k) {
       var a = (S.hl.pilih || []).concat(S.hl.top || []);
       for (var i = 0; i < a.length; i++) if (a[i].k === k) return a[i];
-      return null;
+      return S.hl.peta[k] || null;
     }
+    /** Terpasang + modal, lalu dua kotak: "Update harga" (merah) & "Stok terlama" (kuning, dari tanggal masuk kode yang stoknya masih ada). */
     function hlInfo(x) {
-      return 'Terpasang <b>' + rp(x.harga) + '</b><span class="hl-hari">' + (x.t ? lamanya(x.t) + ' lalu' : 'belum ada tanggal') + '</span>' +
-        (x.m ? '<br>Modal ' + rb(x.m) + ' · ' + x.q + ' unit' : '');
+      var ms = S.ref && S.ref.masuk && S.ref.masuk[x.k], aw = ms && ms[0];
+      return 'Terpasang <b>' + rp(x.harga) + '</b>' + (x.m ? ' · Modal ' + rb(x.m) + ' · ' + x.q + ' unit' : '') +
+        '<span class="hl-dua"><span class="h">Update harga<b>' + (x.t ? (lamanya(x.t) || 'hari ini') + (lamanya(x.t) ? ' lalu' : '') : 'belum ada tanggal') + '</b></span>' +
+        '<span class="s">Stok terlama<b>' + (aw ? (lamanya(aw) || 'hari ini') : '–') + '</b></span></span>';
     }
     function hlBaris(x, no) {
       var ok = S.hl.ok[x.k], ek = esc(x.k);
@@ -1908,8 +1942,47 @@
         '<div class="hl-tx"><div class="hl-nm">' + esc(x.nama) + '</div><div class="hl-mt">' + hlInfo(x) + '</div>' +
         (ok ? '<div class="hl-ok">' + IKON_CEK + '<span>' + ok + '</span></div>'
           : '<div class="hl-inp"><input type="text" inputmode="numeric" autocomplete="off" placeholder="Ketik ulang harganya" data-lk="' + ek + '" aria-label="Harga ' + esc(x.nama) + '">' +
-            '<button type="button" data-lsimpan="' + ek + '"' + (S.hl.yakin[x.k] ? ' class="awas"' : '') + '>' + (S.hl.yakin[x.k] ? 'Yakin?' : 'Simpan') + '</button></div>') +
+            '<button type="button" data-lsimpan="' + ek + '"' + (S.hl.yakin[x.k] ? ' class="awas"' : '') + '>' + (S.hl.yakin[x.k] ? 'Yakin?' : 'Simpan') + '</button></div>' +
+            '<div class="hl-bwh"><button type="button" class="link sejenis" data-hlsj="' + ek + '" aria-expanded="' + (S.hl.sj === x.k) + '">' +
+              (S.hl.sj === x.k ? 'Tutup sejenis ▴' : 'Sejenis ▾') + '</button></div>' +
+            (S.hl.sj === x.k ? '<div class="hl-sj">' + htmlSejenis({ k: x.k, nama: x.nama, harga: x.harga }) + '</div>' : '')) +
         '</div></div>';
+    }
+    /** Per kategori seperti katalog: Processor/RAM/SSD/Others -> jenis -> blok -> kelompok (buka-tutup). */
+    function hlKatHtml(L) {
+      var P = S.hl.kt, T = P.t;
+      var semua = L.map(function (x) { return { x: x, l: letakBarang(x.k, x.nama) }; });
+      var perTab = [0, 0, 0, 0]; semua.forEach(function (y) { perTab[y.l.t]++; });
+      var diTab = semua.filter(function (y) { return y.l.t === T; });
+      var jenis = KT_SUB[T].filter(function (n) { return diTab.some(function (y) { return y.l.s === n; }); });
+      if (P.sub[T] >= jenis.length) P.sub[T] = 0;
+      var pilihJ = jenis.length > 1 ? jenis[P.sub[T]] : null;
+      var Ls = pilihJ ? diTab.filter(function (y) { return y.l.s === pilihJ; }) : diTab;
+      Ls.sort(function (a, b) { return a.l.ob - b.l.ob || a.l.og - b.l.og || (a.x.t || 0) - (b.x.t || 0) || a.x.nama.localeCompare(b.x.nama); });
+      var blok = [];
+      Ls.forEach(function (y) {
+        var b = blok[blok.length - 1];
+        if (!b || b.j !== y.l.b) blok.push(b = { j: y.l.b, g: [] });
+        var g = b.g[b.g.length - 1];
+        if (!g || g.n !== y.l.g) b.g.push(g = { n: y.l.g, id: y.l.b + '|' + y.l.g, it: [] });
+        g.it.push(y.x);
+      });
+      return '<div class="hl-ktg"><div class="pita-kat">' + KT_TAB.map(function (n, i) {
+          return '<button type="button" class="' + (i === T ? 'on' : '') + '" data-hlkt="' + i + '">' + n + '<span class="c' + (perTab[i] ? '' : ' nol') + '">' + (perTab[i] || '✓') + '</span></button>';
+        }).join('') + '</div>' +
+        (jenis.length > 1 ? '<div class="kt-sub">' + jenis.map(function (n, i) {
+          var j = diTab.filter(function (y) { return y.l.s === n; }).length;
+          return '<button type="button" class="kt-sc' + (i === P.sub[T] ? ' on' : '') + '" data-hlsub="' + i + '">' + esc(n) + '<span class="pc-n">' + j + '</span></button>';
+        }).join('') + '</div>' : '') +
+        (Ls.length ? '' : '<div class="pita-beres">' + IKON_CEK + 'Semua harga ' + KT_TAB[T] + ' sudah diupdate dalam 1 bulan terakhir</div>') +
+        '<div class="pc-isi">' + blok.map(function (b) {
+          return '<div class="kg-blok"><div class="kg-judul"><span>' + esc(b.j) + '</span></div>' + b.g.map(function (g) {
+            var buka = !!P.buka[g.id];
+            return '<button type="button" class="kg-grup' + (buka ? ' buka' : '') + '" data-hlgrup="' + esc(g.id) + '" aria-expanded="' + buka + '"><b>' + esc(g.n) + '</b>' +
+              '<em class="kg-tanda">' + g.it.length + ' perlu cek</em></button>' +
+              (buka ? '<div class="hl-grup">' + g.it.map(function (x) { return hlBaris(x); }).join('') + '</div>' : '');
+          }).join('') + '</div>';
+        }).join('') + '</div></div>';
     }
     function gambarHL(paksa) {
       var box = el('hargaLama'), ly = el('layarLama');
@@ -1917,6 +1990,7 @@
       var a = document.activeElement;
       if (!paksa && a && a.getAttribute && a.getAttribute('data-lk') && (box.contains(a) || ly.contains(a))) return;   // sedang mengetik
       var L = hlDaftar();
+      S.hl.peta = {}; L.forEach(function (x) { S.hl.peta[x.k] = x; });
       if (!S.hl.pilih) hlPilih(L);
       setHtml('hargaLama', !S.hl.pilih.length ? '' : '<section class="hl-kartu"><div class="hl-kep"><span>⏳ Harga lama belum diupdate</span><small>' + L.length + ' barang</small></div>' +
         S.hl.pilih.map(function (x) { return hlBaris(x); }).join('') +
@@ -1935,6 +2009,7 @@
         var mx = kl.length && kl[0].m || 1;
         setHtml('hlIsi', '<div class="hl-sek">5 barang teratas <small>· modal terbesar &amp; paling lama</small></div>' +
           '<div class="hl-list">' + S.hl.top.map(function (x, i) { return hlBaris(x, i + 1); }).join('') + '</div>' +
+          (L.length ? '<div class="hl-sek">Per kategori <small>· seperti katalog</small></div>' + hlKatHtml(L) : '') +
           (kl.length ? '<div class="hl-sek">Kategori modal terbesar <small>· belum update</small></div>' + kl.map(function (g) {
             var b = !!S.hl.kat[g.n];
             return '<div class="hl-kt"><button type="button" data-hlkat="' + esc(g.n) + '" aria-expanded="' + b + '"><span class="hl-kb"><b>' + esc(g.n) + '</b><span>' + (g.m ? rb(g.m) : '') + ' ' + (b ? '▴' : '▾') + '</span></span>' +
@@ -2049,6 +2124,17 @@
       if (t.closest('[data-gruptutup]')) { tutupGrup(); return; }
       if (t.closest('[data-grupLagi]') || t.closest('[data-gruplagi]')) { S.batasGrup += 10; perbaruiPerlu(); return; }
       if ((x = t.closest('[data-lsimpan]'))) { simpanLama(x.getAttribute('data-lsimpan')); return; }
+      if ((x = t.closest('[data-hlsj]'))) { var hs = x.getAttribute('data-hlsj'); S.hl.sj = S.hl.sj === hs ? '' : hs; gambarHL(true); return; }
+      if ((x = t.closest('[data-pakai]')) && hlCari(x.getAttribute('data-pakai')) && (S.hl.sj === x.getAttribute('data-pakai'))) {
+        var hk2 = x.getAttribute('data-pakai'), hh = Number(x.getAttribute('data-h'));
+        S.hl.isi[hk2] = hh; delete S.hl.yakin[hk2]; gambarHL(true);
+        var hi = sel('data-lk', hk2); if (hi) hi.focus();
+        toast('Harga ' + rp(hh) + ' dimasukkan. Sesuaikan kalau perlu, lalu tekan Simpan.');
+        return;
+      }
+      if ((x = t.closest('[data-hlkt]'))) { S.hl.kt.t = Number(x.getAttribute('data-hlkt')); gambarHL(true); return; }
+      if ((x = t.closest('[data-hlsub]'))) { S.hl.kt.sub[S.hl.kt.t] = Number(x.getAttribute('data-hlsub')); gambarHL(true); return; }
+      if ((x = t.closest('[data-hlgrup]'))) { var hg = x.getAttribute('data-hlgrup'); S.hl.kt.buka[hg] = !S.hl.kt.buka[hg]; gambarHL(true); return; }
       if (t.closest('[data-hllain]')) { bukaHL(); return; }
       if (t.closest('[data-hltutup]')) { tutupHL(); return; }
       if ((x = t.closest('[data-hlkat]'))) { var hk = x.getAttribute('data-hlkat'); S.hl.kat[hk] = !S.hl.kat[hk]; gambarHL(true); return; }
@@ -2064,7 +2150,7 @@
       if ((x = t.closest('[data-kcek]'))) { simpanKatalog(x.getAttribute('data-kcek')); return; }
       if (t.closest('[data-kbatal]')) { batalEditKatalog(); return; }
       if ((x = t.closest('[data-sejenis]'))) { var ks = x.getAttribute('data-sejenis'); S.sejenis = S.sejenis === ks ? '' : ks; perbaruiView(); return; }
-      if ((x = t.closest('[data-sjlagi]'))) { S.sejenisLagi[x.getAttribute('data-sjlagi')] = true; perbaruiView(); return; }
+      if ((x = t.closest('[data-sjlagi]'))) { S.sejenisLagi[x.getAttribute('data-sjlagi')] = true; perbaruiView(); gambarHL(true); return; }
       if ((x = t.closest('[data-pakai]'))) { pakaiHarga(x.getAttribute('data-pakai'), Number(x.getAttribute('data-h'))); return; }
       if ((x = t.closest('[data-edit]'))) { bukaEdit(x.getAttribute('data-edit')); return; }
       if ((x = t.closest('[data-batal]'))) { batalEdit(x.getAttribute('data-batal')); return; }
